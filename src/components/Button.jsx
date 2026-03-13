@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function SimpleButton({ text, onClick }) {
+function Button({ text, onClick }) {
   return (
     <button onClick={onClick}>
       {text}
@@ -8,4 +8,4 @@ function SimpleButton({ text, onClick }) {
   );
 }
 
-export default SimpleButton;
+export default Button;

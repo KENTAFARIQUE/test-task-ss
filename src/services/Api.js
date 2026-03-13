@@ -1,0 +1,85 @@
+const API_KEY = import.meta.env.VITE_FOOTBALL_API_KEY;
+const BASE_URL = '/api';
+
+const headers = {
+  'X-Auth-Token': API_KEY,
+  'Content-Type': 'application/json',
+};
+
+async function fetchApi(endpoint) {
+  try {
+    console.log('Запрос к:', BASE_URL + endpoint);
+    
+    const response = await fetch(BASE_URL + endpoint, {
+      headers: headers
+    });
+
+    if (!response.ok) {
+      let errorText;
+      try {
+        errorText = await response.text();
+      } catch (e) {
+        errorText = 'Не удалось прочитать тело ошибки';
+      }
+      
+      console.error('Статус ошибки:', response.status);
+      console.error('Текст ошибки:', errorText);
+      
+      let errorMessage = `HTTP ${response.status}`;
+      
+      if (response.status === 400) {
+        errorMessage = 'Неверный запрос. Проверьте параметры.';
+      } else if (response.status === 403) {
+        errorMessage = 'Доступ запрещен. Проверьте API ключ.';
+      } else if (response.status === 404) {
+        errorMessage = 'Ресурс не найден. Проверьте endpoint.';
+      } else if (response.status === 429) {
+        errorMessage = 'Слишком много запросов. Подождите минуту.';
+      } else if (response.status >= 500) {
+        errorMessage = 'Ошибка сервера. Попробуйте позже.';
+      }
+      
+      throw new Error(errorMessage);
+    }
+
+
+    const data = await response.json();
+    console.log('Успешный ответ:', data);
+    return data;
+
+  } catch (error) {
+    console.error('Ошибка fetchApi:', error);
+    throw error;
+  }
+}
+
+export const footballApi = {
+  getLeagues() {
+    return fetchApi('/competitions');
+  },
+  
+  getTeams() {
+    return fetchApi('/teams');
+  },
+
+  getLeagueMatches: (leagueId, dateFrom, dateTo) => {
+    let url = `/competitions/${leagueId}/matches`;
+    const params = [];
+    if (dateFrom) params.push(`dateFrom=${dateFrom}`);
+    if (dateTo) params.push(`dateTo=${dateTo}`);
+    if (params.length) url += '?' + params.join('&');
+    return fetchApi(url);
+  },
+
+  getTeamMatches: (teamId, dateFrom, dateTo) => {
+    let url = `/teams/${teamId}/matches`;
+    const params = [];
+    if (dateFrom) params.push(`dateFrom=${dateFrom}`);
+    if (dateTo) params.push(`dateTo=${dateTo}`);
+    if (params.length) url += '?' + params.join('&');
+    return fetchApi(url);
+  },
+
+};
+
+export default footballApi;
