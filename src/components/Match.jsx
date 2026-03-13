@@ -49,7 +49,6 @@ const Match = ({ match }) => {
     }
   };
 
-  // Формируем счет
   const getScore = (score) => {
     if (!score || !score.fullTime) return '? : ?';
     

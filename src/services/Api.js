@@ -8,8 +8,6 @@ const headers = {
 
 async function fetchApi(endpoint) {
   try {
-    console.log('Запрос к:', BASE_URL + endpoint);
-    
     const response = await fetch(BASE_URL + endpoint, {
       headers: headers
     });
@@ -44,7 +42,6 @@ async function fetchApi(endpoint) {
 
 
     const data = await response.json();
-    console.log('Успешный ответ:', data);
     return data;
 
   } catch (error) {

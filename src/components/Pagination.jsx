@@ -1,6 +1,3 @@
-// components/PaginationWithNumbers.jsx
-import React from 'react';
-
 const PaginationWithNumbers = ({ currentPage, totalPages, onPageChange }) => {
   // Создаем массив номеров страниц
   const getPageNumbers = () => {

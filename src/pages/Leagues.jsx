@@ -65,7 +65,7 @@ const LeaguesView = () => {
             ))}
           </div>
           
-          <div style={{ marginTop: '10px', color: '#666', textAlign: 'center' }}>
+          <div>
             Показано {startIndex + 1}-{Math.min(endIndex, filteredLeagues.length)} из {filteredLeagues.length} лиг
           </div>
           
