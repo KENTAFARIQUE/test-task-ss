@@ -5,11 +5,13 @@ import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
 import { useTeams } from '../hooks/useTeams';
 
+import './GridView.css'
+
 const TeamsView = () => {
   const { teams, loading, error } = useTeams();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12; // количество команд на странице
+  const itemsPerPage = 10; // количество команд на странице
 
   // Фильтруем команды по поиску
   const filteredTeams = useMemo(() => {
@@ -56,11 +58,7 @@ const TeamsView = () => {
         </div>
       ) : (
         <>
-        <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px'
-          }}>
+        <div className="grid">
             {currentTeams.map(team => (
               <TeamCard key={team.id} team={team} />
             ))}

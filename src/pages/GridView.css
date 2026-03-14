@@ -1,0 +1,29 @@
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    animation: fadeInDown 0.5s ease forwards;
+    padding-top: 150px;
+    align-content: center;
+}
+
+.second-header {
+  position: fixed;
+  top: 100px; /* высота главного хедера */
+  z-index: 10;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+}

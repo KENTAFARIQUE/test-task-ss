@@ -6,7 +6,6 @@ const SearchBar = ({ searchTerm, onSearchChange, placeholder = 'Поиск...' }
     <div style={{
       marginBottom: '20px',
       display: 'flex',
-      justifyContent: 'center'
     }}>
       <input
         type="text"

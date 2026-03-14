@@ -1,7 +1,8 @@
+import './styles/Pagination.css'
+
 const PaginationWithNumbers = ({ currentPage, totalPages, onPageChange }) => {
-  // Создаем массив номеров страниц
   const getPageNumbers = () => {
-    const delta = 2; // сколько страниц показывать по бокам от текущей
+    const delta = 2;
     const range = [];
     const rangeWithDots = [];
     let l;
@@ -28,18 +29,10 @@ const PaginationWithNumbers = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '5px',
-      marginTop: '20px',
-      padding: '20px'
-    }}>
+    <div className="pagination">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        style={buttonStyle(currentPage === 1)}
       >
         ←
       </button>
@@ -49,11 +42,6 @@ const PaginationWithNumbers = ({ currentPage, totalPages, onPageChange }) => {
           key={index}
           onClick={() => typeof page === 'number' ? onPageChange(page) : null}
           disabled={page === '...'}
-          style={{
-            ...buttonStyle(page === '...'),
-            ...(page === currentPage ? activeButtonStyle : {}),
-            minWidth: '40px'
-          }}
         >
           {page}
         </button>
@@ -62,28 +50,11 @@ const PaginationWithNumbers = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        style={buttonStyle(currentPage === totalPages)}
       >
         →
       </button>
     </div>
   );
-};
-
-const buttonStyle = (disabled) => ({
-  padding: '8px 12px',
-  backgroundColor: disabled ? '#ccc' : '#f0f0f0',
-  color: disabled ? '#666' : '#333',
-  border: '1px solid #ddd',
-  borderRadius: '4px',
-  cursor: disabled ? 'not-allowed' : 'pointer',
-  fontSize: '14px'
-});
-
-const activeButtonStyle = {
-  backgroundColor: '#1976d2',
-  color: 'white',
-  border: '1px solid #1976d2'
 };
 
 export default PaginationWithNumbers;

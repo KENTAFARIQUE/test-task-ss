@@ -3,12 +3,15 @@ import LeagueCard from '../components/LeagueCard'
 import { useLeagues } from '../hooks/useLeagues';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
+import Spinner from '../components/Spinner';
+
+import './GridView.css'
 
 const LeaguesView = () => {
   const { leagues, loading, error } = useLeagues();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12; // количество элементов на странице
+  const itemsPerPage = 10; // количество элементов на странице
 
   // Фильтруем лиги
   const filteredLeagues = useMemo(() => {
@@ -36,30 +39,27 @@ const LeaguesView = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredLeagues.slice(startIndex, endIndex);
 
-  if (loading) return <div>Загрузка...</div>;
+  if (loading) return <div><Spinner/></div>;
   if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <div>
-      <h1>Лиги</h1>
-      
-      <SearchBar 
-        searchTerm={searchTerm}
-        onSearchChange={handleSearch}
-        placeholder="Поиск..."
-      />
-      
+      <div className="second-header">
+        <h1 style={{ color: '#ffffff'}}>Лиги</h1>
+        
+        <SearchBar 
+          searchTerm={searchTerm}
+          onSearchChange={handleSearch}
+          placeholder="Поиск..."
+        />
+      </div>
       {filteredLeagues.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '40px' }}>
           {searchTerm ? 'Ничего не найдено' : 'Нет доступных лиг'}
         </div>
       ) : (
         <>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px'
-          }}>
+          <div className="grid">
             {currentItems.map(league => (
               <LeagueCard key={league.id} league={league} />
             ))}

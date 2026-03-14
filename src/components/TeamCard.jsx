@@ -11,11 +11,10 @@ function TeamCard({ team }) {
 
   return (
     <div 
-      className="team-card" 
-      onClick={handleClick}
-      style={{border: '1px solid #2b2b2b', cursor: 'pointer'}}>
-        <img src={team.crest} alt={team.name} width="30" />
-        <h1>{team.name}</h1> 
+      className="card" 
+      onClick={handleClick}>
+      <img src={team.crest} alt={team.name} width="30" />
+      <h1>{team.name}</h1> 
     </div>
   );
 }
